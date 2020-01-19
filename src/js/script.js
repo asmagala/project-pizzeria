@@ -1,4 +1,4 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+/* global Handlebars, utils, dataSource */ //  eslint-disable-line no-unused-vars
 
 {
   'use strict';
@@ -47,7 +47,7 @@
       defaultMax: 9,
     }
   };
-
+ 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
@@ -59,9 +59,9 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
-
-      console.log('new Product:', thisProduct);
+      thisProduct.initAccordion();
     }
+
     renderInMenu(){
       const thisProduct = this;
 
@@ -74,7 +74,34 @@
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
+
+    initAccordion() {
+      /* find all products */
+      const articleProducts = document.querySelectorAll('article.product');
+      /* START: Iterate throught all products */
+      for(const article of articleProducts)
+      {
+        /* Add event to each product */
+        article.addEventListener('click', function(event) {
+          /* prevent default action for event */
+          event.preventDefault();
+          /* Get clickedElement */
+          const clickedElement = this;
+          /* START: clean all active classes and set active to clicked element */
+          for(const art of articleProducts) {
+            if (clickedElement == art) {
+              art.classList.add(classNames.menuProduct.wrapperActive);
+            } else {
+              art.classList.remove(classNames.menuProduct.wrapperActive);
+            }
+          /* EMD: of clean */
+          }
+        }); /* END: of anonymous function */
+      }
+      /* END: of iteration through products */
+    }
   }
+
 
   const app = {
     initMenu: function() {
@@ -105,8 +132,6 @@
       thisApp.initMenu();
     },
   };
-
-
 
   app.init();
 }
