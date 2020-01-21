@@ -76,6 +76,9 @@
     }
 
     initAccordion() {
+      const thisProduct = this;
+      console.log('thisProduct:', thisProduct);
+
       /* find all products */
       const articleProducts = document.querySelectorAll('article.product');
       /* START: Iterate throught all products */
