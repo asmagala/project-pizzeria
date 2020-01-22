@@ -77,64 +77,37 @@
 
     initAccordion() {
       const thisProduct = this;
-      console.log('thisProduct:', thisProduct);
 
       /* find the clickable trigger ( the element that should react to clicking) */
       const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      const clickedArticle = thisProduct.element;
 
-      console.log('clickableTrigger:', clickableTrigger);
-      console.log('clickedArticle:', clickedArticle);
       /* START: click event listener to trigger */
       clickableTrigger.addEventListener('click', function(event) {
         /* prevent default action for event */
         event.preventDefault();
         const thisTrigger = this;
-        console.log('clicked', thisTrigger);
-        console.log('this:', this);
+        
         /* toggle active class on element of thisProduct */
-        //thisProduct.element.
-        console.log('thisProduct', thisProduct);
+        thisTrigger.parentElement.classList.add('active');
+        
         /* find all active products */
-
+        const activeProducts = document.querySelectorAll('article.product.active');
+        
         /* START LOOP: for each active product */
+        for(let activeProduct of activeProducts) {
 
           /* Start: if the active product isn't the element of thisProduct */
+          if(activeProduct != thisProduct.element) {
 
             /* remove class active for the active product */
+            activeProduct.classList.remove('active');
 
           /* END: if the active product isn't the element of thisProduct */
-        
-        /* END LOOP: for each active product */
-
-      /* END: click event listener to trigger */
+          }
+          /* END LOOP: for each active product */
+        }
+        /* END: click event listener to trigger */
       });
-      
-      
-      ///////////////////////////////////////////////////////////////////////////
-      /* find all products */
-      // const articleProducts = document.querySelectorAll('article.product');
-      /* START: Iterate throught all products */
-      //for(const article of articleProducts)
-      //{
-        /* Add event to each product */
-      //  article.addEventListener('click', function(event) {
-          /* prevent default action for event */
-      //    event.preventDefault();
-          /* Get clickedElement */
-      //    const clickedElement = this;
-          /* START: clean all active classes and set active to clicked element */
-      //    for(const art of articleProducts) {
-      //      if (clickedElement == art) {
-      //        art.classList.add(classNames.menuProduct.wrapperActive);
-      //      } else {
-      //        art.classList.remove(classNames.menuProduct.wrapperActive);
-      //      }
-          /* EMD: of clean */
-      //    }
-      //  }); /* END: of anonymous function */
-      //}
-      /* END: of iteration through products */
     }
   }
 
