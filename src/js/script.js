@@ -89,7 +89,7 @@
           const clickedElement = this;
           /* START: clean all active classes and set active to clicked element */
           for(const art of articleProducts) {
-            if (clickedElement == art) {
+            if (clickedElement === art) {
               art.classList.add(classNames.menuProduct.wrapperActive);
             } else {
               art.classList.remove(classNames.menuProduct.wrapperActive);
