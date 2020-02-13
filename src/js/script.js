@@ -122,7 +122,7 @@
 
     initOrderForm() {
       const thisProduct = this;
-      console.log('wywołano metodyę "initOrderForm()"');
+      // console.log('wywołano metodyę "initOrderForm()"');
 
       thisProduct.form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -143,10 +143,24 @@
 
     processOrder() {
       const thisProduct = this;
-      console.log('wywolano metodę "processOrder()"');
+      // console.log('wywolano metodę "processOrder()"');
 
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      if (thisProduct.id === 'pizza') {
+        console.log('formData', formData);
+        console.log('thisProduct:', thisProduct);
+        console.log('Name:', thisProduct.data.name);
+        
+        for(let param in thisProduct.data.params) {
+          console.log('Param.options:', param);
+          for( let op in thisProduct.data.params[param].options) {
+            console.log('option:', op, 'price:', op.price);
+          }
+        }
+        console.log(thisProduct.data.params.toppings['options']);
+        console.log(thisProduct.data.params.toppings.options.olives.default);
+      }
+      
     }
   }
 
@@ -155,7 +169,7 @@
     initMenu: function() {
       const thisApp = this;
 
-      console.log('thisApp.data:', thisApp.data);
+      // console.log('thisApp.data:', thisApp.data);
       
       for(let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
@@ -175,6 +189,7 @@
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+      console.log('********************************************');
 
       thisApp.initData();
       thisApp.initMenu();
