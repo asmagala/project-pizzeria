@@ -143,24 +143,33 @@
 
     processOrder() {
       const thisProduct = this;
-      // console.log('wywolano metodę "processOrder()"');
-
+     
       const formData = utils.serializeFormToObject(thisProduct.form);
-      if (thisProduct.id === 'pizza') {
-        console.log('formData', formData);
-        console.log('thisProduct:', thisProduct);
-        console.log('Name:', thisProduct.data.name);
-        
-        for(let param in thisProduct.data.params) {
-          console.log('Param.options:', param);
-          for( let op in thisProduct.data.params[param].options) {
-            console.log('option:', op, 'price:', op.price);
+      console.log('formData', formData);
+
+      thisProduct.params = {};
+      let params = thisProduct.data.params;
+      console.log('Params:', params);
+
+      let price = thisProduct.data.price;
+      console.log('price:', price);
+
+      for (let paramId in params) {
+        console.log('param:', params[paramId]);
+        const param = params[paramId];
+        for (let optnId in param.options ) {
+          const optn = param.options[optnId];
+          console.log('optn:', optn);
+
+          const selectedOptn = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optnId)) > -1;
+          if (selectedOptn && !optn.default) {
+            price += optn.price;
+          } else if ((selectedOptn == false) && (optn.default)) {
+            price -= optn.price;
           }
         }
-        console.log(thisProduct.data.params.toppings['options']);
-        console.log(thisProduct.data.params.toppings.options.olives.default);
+        thisProduct.priceElem.innerHTML = price;
       }
-      
     }
   }
 
