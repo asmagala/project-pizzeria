@@ -122,7 +122,6 @@
 
     initOrderForm() {
       const thisProduct = this;
-      // console.log('wywołano metodyę "initOrderForm()"');
 
       thisProduct.form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -145,21 +144,17 @@
       const thisProduct = this;
      
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
 
       thisProduct.params = {};
       let params = thisProduct.data.params;
-      console.log('Params:', params);
 
       let price = thisProduct.data.price;
-      console.log('price:', price);
 
       for (let paramId in params) {
-        console.log('param:', params[paramId]);
+
         const param = params[paramId];
         for (let optnId in param.options ) {
           const optn = param.options[optnId];
-          console.log('optn:', optn);
 
           const selectedOptn = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optnId)) > -1;
           if (selectedOptn && !optn.default) {
@@ -178,8 +173,6 @@
     initMenu: function() {
       const thisApp = this;
 
-      // console.log('thisApp.data:', thisApp.data);
-      
       for(let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
       }
