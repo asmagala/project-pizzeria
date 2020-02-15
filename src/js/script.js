@@ -159,7 +159,7 @@
         for (let optnId in param.options ) {
           const optn = param.options[optnId];
 
-          const selectedOptn = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optnId)) > -1;
+          const selectedOptn = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optnId) > -1);
           
           if (selectedOptn && !optn.default) {
             price += optn.price;
@@ -178,12 +178,12 @@
               img.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
-
         }
-        /* multiply price by amount */
-        price *= thisProduct.amountWidget.value;
-        thisProduct.priceElem.innerHTML = price;
       }
+      /* multiply price by amount */
+      let totalPrice = price;
+      totalPrice = price * thisProduct.amountWidget.value;
+      thisProduct.priceElem.innerHTML = totalPrice;
     }
 
     initAmountWidget() {
