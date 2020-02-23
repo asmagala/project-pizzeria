@@ -1,0 +1,62 @@
+
+> fer-07-project@1.0.0 watch C:\Users\master\Desktop\Kodilla\project-pizzeria
+> npm-run-all build build-dev -p watch:* "$"
+
+
+> fer-07-project@1.0.0 build C:\Users\master\Desktop\Kodilla\project-pizzeria
+> npm-run-all build:* test
+
+
+> fer-07-project@1.0.0 build:clean C:\Users\master\Desktop\Kodilla\project-pizzeria
+> mkdirp dist && rm -r dist && mkdirp dist
+
+
+> fer-07-project@1.0.0 build:copy C:\Users\master\Desktop\Kodilla\project-pizzeria
+> copyfiles -a -u 1 -e "**/sass/**/*" -e "**/.gitkeep" "src/**/*" dist
+
+
+> fer-07-project@1.0.0 build:sass C:\Users\master\Desktop\Kodilla\project-pizzeria
+> node-sass --output-style compact -o dist/css src/sass
+
+Rendering Complete, saving .css file...
+Wrote CSS to C:\Users\master\Desktop\Kodilla\project-pizzeria\dist\css\style.css
+Wrote 1 CSS files to C:\Users\master\Desktop\Kodilla\project-pizzeria\dist\css
+
+> fer-07-project@1.0.0 build:autoprefixer C:\Users\master\Desktop\Kodilla\project-pizzeria
+> globstar autoprefixer-cli "dist/css/*.css"
+
+
+> fer-07-project@1.0.0 test C:\Users\master\Desktop\Kodilla\project-pizzeria
+> npm-run-all test:*
+
+
+> fer-07-project@1.0.0 test:html C:\Users\master\Desktop\Kodilla\project-pizzeria
+> globstar nu-html-checker dist/*.html
+
+index.html
+No validation errors found!
+
+
+> fer-07-project@1.0.0 test:js C:\Users\master\Desktop\Kodilla\project-pizzeria
+> eslint src/js/
+
+
+> fer-07-project@1.0.0 test:scss C:\Users\master\Desktop\Kodilla\project-pizzeria
+> stylelint src/sass/
+
+
+> fer-07-project@1.0.0 build-dev C:\Users\master\Desktop\Kodilla\project-pizzeria
+> npm-run-all build-dev:sass build:autoprefixer
+
+
+> fer-07-project@1.0.0 build-dev:sass C:\Users\master\Desktop\Kodilla\project-pizzeria
+> node-sass --output-style expanded --source-map true -o dist/css src/sass
+
+Rendering Complete, saving .css file...
+Wrote CSS to C:\Users\master\Desktop\Kodilla\project-pizzeria\dist\css\style.css
+Wrote Source Map to C:\Users\master\Desktop\Kodilla\project-pizzeria\dist\css\style.css.map
+Wrote 1 CSS files to C:\Users\master\Desktop\Kodilla\project-pizzeria\dist\css
+
+> fer-07-project@1.0.0 build:autoprefixer C:\Users\master\Desktop\Kodilla\project-pizzeria
+> globstar autoprefixer-cli "dist/css/*.css"
+

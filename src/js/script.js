@@ -193,23 +193,22 @@
         for (let optionId in param.options ) {
           const option = param.options[optionId];
 
-          const optionSelected = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optionId) > -1);
+          const optionSelected = formData.hasOwnProperty(paramId) && (formData[paramId].indexOf(optionId) !== -1);
           
           if (optionSelected && !option.default) {
             price += option.price;
-          } else if ((optionSelected == false) && (option.default)) {
+          } else if ((!optionSelected) && (option.default)) {
             price -= option.price;
           }
 
           const imgClassName = '.' + paramId + '-' + optionId;
           const imgs = thisProduct.imageWrapper.querySelectorAll(imgClassName);
-          if (optionSelected) {
-            if(!thisProduct.params[paramId]) {
-              thisProduct.params[paramId] = {
-                label: param.label,
-                options: {},
-              };
-            }
+          if ((optionSelected) && !thisProduct.params[paramId]) {
+            thisProduct.params[paramId] = {
+              label: param.label,
+              options: {},
+            };
+          
             thisProduct.params[paramId].options[optionId] = option.label;
             for (let img of imgs) {
               img.classList.add(classNames.menuProduct.imageVisible);
