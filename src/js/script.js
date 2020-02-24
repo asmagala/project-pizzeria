@@ -225,7 +225,6 @@
       thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
 
       thisProduct.priceElem.innerHTML = thisProduct.price;
-      // console.log('thisProduct.params', thisProduct.params);
     }
 
     initAmountWidget() {
@@ -254,8 +253,6 @@
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
-      //console.log('AmountWidget:', thisWidget);
-      //console.log('constructor arguments:', element);
     }
 
     getElements(element) {
@@ -320,7 +317,6 @@
 
       thisCart.getElements(element);
       thisCart.initActions();
-      //console.log('new Cart', thisCart);
     }
 
     getElements(element) {
@@ -350,6 +346,10 @@
       thisCart.dom.productList.addEventListener('updated', function() {
         thisCart.update();
       });
+
+      thisCart.dom.productList.addEventListener('remove', function(event) {
+        thisCart.remove(event.detail.cartProduct);
+      });
     }
 
     add(menuProduct) {
@@ -363,7 +363,6 @@
       thisCart.dom.productList.appendChild(generatedDOM);
 
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-      //console.log('thisCart.products', thisCart.products);
 
       thisCart.update();
     }
@@ -386,8 +385,16 @@
           elem.innerHTML = thisCart[key];
         }
       }
+    }
 
-      // console.log('totalNumber:', thisCart.totalNumber, '\nsubtotalPrice:', thisCart.subtotalPrice, '\nthisCart.totalPrice:', thisCart.totalPrice);
+    remove(cartProduct) {
+      const thisCart = this;
+      const index = thisCart.products.indexOf(cartProduct);
+
+      thisCart.products.splice(index, 1);
+      cartProduct.dom.wrapper.remove();
+
+      this.update();
     }
   }
 
@@ -437,14 +444,12 @@
 
       const event = new CustomEvent('remove', {
         bubbles: true,
-        deatil: {
+        detail: {
           cartProduct: thisCartProduct,
         },
       });
 
       thisCartProduct.dom.wrapper.dispatchEvent(event);
-      console.log('Called event:', event);
-      
     }
 
     initActions() {
