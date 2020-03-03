@@ -130,14 +130,11 @@ class Booking {
   }
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
+    const startHour = utils.hourToNumber(hour);
 
     if(typeof thisBooking.booked[date] == 'undefined') {
       thisBooking.booked[date] = {};
     }
-
-    const startHour = utils.hourToNumber(hour);
-
-    
 
     for(let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
       //  console.log('loop', hourBlock); 
