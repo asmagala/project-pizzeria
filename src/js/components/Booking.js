@@ -1,4 +1,5 @@
 import {templates, select, settings} from '../settings.js';
+import {utils} from '../utils.js';
 import DatePicker from './DatePicker.js';
 import AmountWidget from './AmountWidget.js';
 import HourPicker from './HourPicker.js';
@@ -15,20 +16,26 @@ class Booking {
   getData() {
     const thisBooking = this;
 
+    const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
+    const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
+
     const params = {
       booking: [
-        'abc=xyz',
-        'lorem=ipsum',
+        startDateParam,
+        endDateParam,
       ],
       eventsCurrent: [
-
+        settings.db.notRepeatParam,
+        startDateParam,
+        endDateParam,
       ],
       eventsRepeat: [
-
+        settings.db.repeatParam,
+        startDateParam,
       ],
     };
 
-    console.log('getData params:', params); 
+    // console.log('getData params:', params); 
 
     const urls = {
       booking:        settings.db.url + '/' + settings.db.booking 
@@ -39,8 +46,28 @@ class Booking {
                                       + '?' +    params.eventsRepeat.join('&') ,
     };
 
-    console.log('getData urls:', urls);
+    //console.log('getData urls:', urls);
 
+    Promise.all([
+      fetch(urls.booking),
+      fetch(urls.eventsCurrent),
+      fetch(urls.eventsRepeat),
+    ])
+      .then(function(allResponses) {
+        const bookingsResponse = allResponses[0];
+        const eventsCurrentResponse = allResponses[1];
+        const eventsRepeatResponse = allResponses[2];
+        return Promise.all([
+          bookingsResponse.json(),
+          eventsCurrentResponse.json(),
+          eventsRepeatResponse.json(),
+        ]);
+      })
+      .then(function([bookings,eventsCurrent, eventsRepeat ]) {
+        console.log('bookings', bookings);
+        console.log('eventsCurrent', eventsCurrent);
+        console.log('eventsRepeat', eventsRepeat);
+      });
   }
 
   render(elem) {
