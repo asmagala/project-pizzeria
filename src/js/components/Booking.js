@@ -64,16 +64,18 @@ class Booking {
         ]);
       })
       .then(function([bookings,eventsCurrent, eventsRepeat ]) {
-        //console.log('bookings', bookings);
-        //console.log('eventsCurrent', eventsCurrent);
-        //console.log('eventsRepeat', eventsRepeat);
+        console.log('bookings', bookings);
+        console.log('eventsCurrent', eventsCurrent);
+        console.log('eventsRepeat', eventsRepeat);
         thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
       });
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat) {
     const thisBooking = this;
-
+    const minDate = thisBooking.datePicker.minDate;
+    const maxDate = thisBooking.datePicker.maxDate;
+    
     thisBooking.booked = {};
 
     for(let item of bookings) {
@@ -84,12 +86,11 @@ class Booking {
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
 
-    const minDate = thisBooking.datePicker.minDate;
-    const maxDate = thisBooking.datePicker.maxDate;
+
 
     for(let item of eventsRepeat) {
       if(item.repeat == 'daily') {
-        for(let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate + 1))
+        for(let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1))
         {
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
@@ -121,7 +122,7 @@ class Booking {
         tableId = parseInt(tableId);
       }
 
-      if( !allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1) {
+      if( !allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) ) {
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
@@ -142,6 +143,7 @@ class Booking {
         thisBooking.booked[date][hourBlock] = [];
       }
       thisBooking.booked[date][hourBlock].push(table);
+      console.log('table', table);
     }
   }
 
