@@ -171,7 +171,10 @@
         background: $color-dark;
         opacity: 0.4;
       }
+    }
 
+    &.booking-in {
+      border: 1px solid red;           
     }
   }
 
