@@ -156,7 +156,9 @@ class Booking {
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
     thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
     thisBooking.dom.formSubmit = thisBooking.dom.wrapper.querySelector(select.booking.formSubmit);
-    
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
     console.log('thisBooking.dom.form',  thisBooking.dom.form);
     console.log('thisBooking.dom.formSubmit.innerHTML', thisBooking.dom.formSubmit.innerHTML);
   }
@@ -213,6 +215,15 @@ class Booking {
       console.log('table:', thisBooking.activeTable);
       console.log('duration:', thisBooking.hoursAmount.value);
       console.log('ppl:', thisBooking.peopleAmount.value);
+      console.log('thisBooking.dom.phone.value:', thisBooking.dom.phone.value);
+      console.log('thisBooking.dom.address.value:', thisBooking.dom.address.value);
+      
+      for (let starter of this.dom.starters) {
+        if (starter.checked === true) {
+          console.log('starter.value:', starter.value);
+          //booking.starters.push(starter.value);
+        }
+      }
     }
     /*
     "date": "2020-03-11",
@@ -229,17 +240,11 @@ class Booking {
       table: thisBooking.activeTable,
       duration: thisBooking.hoursAmount.value,
       ppl: thisBooking.peopleAmount.value,
-
-      
-      totalPrice: thisBooking.totalPrice,
-      subtotalPrice: thisBooking.subtotalPrice,
-      totalNumber: thisBooking.totalNumber,
-      deliveryFee: thisBooking.deliveryFee,
-      
-      
       starters: [],
       phone: thisBooking.dom.phone.value,
       address: thisBooking.dom.address.value,
+
+  
     };
 
     for (let product of thisBooking.products) {
