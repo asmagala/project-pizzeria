@@ -16,6 +16,7 @@ class DatePicker extends BaseWidget {
   initPlugin() {
     const thisWidget = this;
 
+    
     thisWidget.minDate = new Date(thisWidget.value);
     /* Set maxDate that is maxDaysInFuture days later than minDate */
     thisWidget.maxDate = new Date(utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture));
