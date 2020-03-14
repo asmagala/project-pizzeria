@@ -233,12 +233,24 @@ class Booking {
 
       fetch(url, options)
         .then(function(response) {
-          return response.json();
+          if(response.ok) {
+            return response.json();
+          } else {
+            return Promise.reject({status: response.status, statusText: response.statusText });
+          }
+        })
+        .then(function() {
+          thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+          thisBooking.updateDOM();
+          thisBooking._removeActiveClassFromTables();
+        })
+        .catch(function(err) {
+          thisBooking.updateDOM();
+          thisBooking._removeActiveClassFromTables();
+          alert('Error: ' + err.status + ' - ' + err.statusText);
         });
 
-      thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
-      thisBooking.updateDOM();
-      thisBooking._removeActiveClassFromTables();
+      
     }
 
   }
